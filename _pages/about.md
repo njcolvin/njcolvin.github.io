@@ -17,4 +17,4 @@ selected_papers: false # includes a list of papers marked as "selected={true}"
 social: true  # includes social icons at the bottom of the page
 ---
 
-Hello and welcome to my GitHub Page. This site is very much a work in progress. I will gradually be updating it, so in the mean time please try to discern my content from the placeholder's, Albert Einstein (I know, it's a daunting task since we are so similar).
+Hello and welcome to my GitHub Page. This site is a work in progress and will be gradually updated.
