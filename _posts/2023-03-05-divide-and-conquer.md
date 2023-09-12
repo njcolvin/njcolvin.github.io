@@ -2,7 +2,7 @@
 layout: distill
 title: Recursion
 description: an introduction to solving problems recursively
-tags: distill formatting
+tags: algorithms math
 giscus_comments: true
 date: 2023-03-05
 featured: true
@@ -29,7 +29,7 @@ toc:
 
 ## Introduction
 
-This note assumes you know what an algorithm is, but as a quick refresher according to Jeff Erickson, "an algorithm is an explicit, precise, unambiguous, mechanically-executable sequence of elementary instructions, usually intended to accomplish a specific purpose."
+This note assumes you know what an algorithm is, but as a quick refresher according to Jeff Erickson, "an algorithm is an explicit, precise, unambiguous, mechanically-executable sequence of elementary instructions, usually intended to accomplish a specific purpose."<d-cite key="erickson2019Algos"></d-cite>
 
 Good algorithms are incredibly useful, but sometimes a problem might not have a clear algorithmic solution. Worse, it might even be [impossible](https://en.wikipedia.org/wiki/Undecidable_problem). A powerful method to solve an unknown problem is to make a **reduction** to one or more simpler problems that can be solved by known algorithms. The reduction of a problem can even be into smaller instances of itself, breaking up repeatedly until reaching one of several base cases. This is called **recursion**. Divide-and-conquer is a general pattern for solving a problem using recursion:
 
@@ -82,7 +82,7 @@ $$
 
 This looks good for the recurrence, i.e. the inductive step. But we also have to show the inequality holds for the base cases, i.e. for $$c$$ and $$n_0$$. Notice if we choose $$n_0 = 1$$ as the base case, our recurrence says $$T(1) = 2\lfloor{1/2}\rfloor + 1 = 1$$, but the inequality says $$T(1) \leq c1\lg{1} = 0$$, a contradiction!
 
-Luckily, we can remove the troublesome $$n = 1$$ base case from the inductive proof (it is still part of the recurrence, though). Observe that $$T(n)$$ does not depend on $$T(1)$$ for $$n > 3$$. We can replace $$T(1)$$ with $$T(2)$$ and $$T(3)$$ as the base cases in the inductive proof by setting $$n_0 = 2$$. Now we just need to find a value for $$c$$ so that $$T(2) \leq c2\lg{2}$$ and $$T(3) \leq c3\lg{3}$$. Any $$c \geq 2$$ is sufficient.
+Luckily, we can remove the troublesome $$n = 1$$ base case from the inductive proof (it is still part of the recurrence, though). Observe that $$T(n)$$ does not depend on $$T(1)$$ for $$n > 3$$. We can replace $$T(1)$$ with $$T(2)$$ and $$T(3)$$ as the base cases in the inductive proof by setting $$n_0 = 2$$. Now we just need to find a value for $$c$$ so that $$T(2) \leq c2\lg{2}$$ and $$T(3) \leq c3\lg{3}$$. Any $$c \geq 2$$ is sufficient.<d-cite key="clrs2009"></d-cite>
 
 This was an example of the **substitution method** for solving recurrences:
 
