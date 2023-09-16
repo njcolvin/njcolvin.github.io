@@ -65,7 +65,7 @@ $$
 This looks like merge sort, so how can we show $$T(n) = O(n \log{n})$$? Using the definition of [big O](https://en.wikipedia.org/wiki/Big_O_notation), we must show there exist positive constants $$c$$ and $$n_0$$ such that:
 
 $$
-T(n) \leq cn\lg{n}, \quad n > n_0
+T(n) \leq cn\lg{n}, \quad n \geq n_0
 $$
 
 To do this, we must assume the above inequality holds for some positive $$m < n$$, particularly $$m = \lfloor{n/2}\rfloor$$. Plugging this in gives:
