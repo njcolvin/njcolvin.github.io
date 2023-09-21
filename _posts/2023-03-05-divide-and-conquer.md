@@ -83,7 +83,7 @@ $$
 
 This looks good for the recurrence, i.e. the inductive step. But we also have to show the inequality holds for the base cases, i.e. for $$c$$ and $$n_0$$. Notice if we choose $$n_0 = 1$$ as the base case, our recurrence says $$T(1) = 2\lfloor{1/2}\rfloor + 1 = 1$$, but the inequality says $$T(1) \leq c1\lg{1} = 0$$, a contradiction!
 
-Luckily, we can remove the troublesome $$n = 1$$ base case from the inductive proof. It's still the base case of the recurrence, but intuitively we don't need to recurse on an array containing a single element because it is already "sorted". We set $$T(1)$$ = 1, and look for other base cases to use in the inductive proof.
+Luckily, we can remove the troublesome $$n = 1$$ base case from the inductive proof. It's still the base case of the recurrence, but intuitively we don't need to recurse on an array containing a single element because it is already "sorted". We set $$T(1) = 1$$, and look for other base cases to use in the inductive proof.
 
 Observe that $$T(n)$$ does not directly depend on $$T(1)$$ for $$n > 3$$. Using $$T(1) = 1$$, we find that $$T(2) = 4$$ and $$T(3) = 5$$. We can use these as the base cases in the inductive proof by setting $$n_0 = 2$$. Now we just need to find a value for $$c$$ so that $$T(2) \leq c2\lg{2}$$ and $$T(3) \leq c3\lg{3}$$. It turns out any $$c \geq 2$$ is sufficient.<d-cite key="clrs2009"></d-cite>
 
@@ -121,8 +121,8 @@ $$T(n) = \sum\limits_{i = 0}^{L}{r^i \cdot f(n/c^i)}$$.
 
 We saw that $$L = \log_c{n}$$ when $$n_0 = 1$$ because $$n/c^L = n_0$$ is the base case. We also saw there are exactly $$r^L = r^{\log_c{n}} = n^{\log_c{r}}$$ leaves. The last key fact was really that the values of the leaves sum to $$n^{\log_c{r}} \cdot \Theta(1) = \Theta(n^{\log_c{r}})$$.<d-cite key="fox2023"></d-cite>
 
-The sum we just saw is a [geometric series](https://en.wikipedia.org/wiki/Geometric_series), whose asymptotic growth is given by the largest term in the series. With this in mind, there are three common cases where the sum is actually easy to evaluate:
+The sum we just saw is a [geometric series](https://en.wikipedia.org/wiki/Geometric_series), whose asymptotic growth is given by the largest term in the series. With this in mind, there are three common cases where the running time is easy to evaluate:
 
 1. **Decreasing**: if every term in the series is a constant factor smaller than the previous term, then the running time is dominated by the value at the root of the tree, and $$T(n) = \Theta(f(n))$$.
 2. **Equal**: if all terms in the series are equal, then $$T(n) = \Theta(f(n) \log{n})$$. Merge sort falls under this case.
-3. **Increasing**: if every term in the series is a constant factor larger than the previous term, then the running time is dominated by the sum of leaf values, so $$T(n) = \Theta(n^{\log_c{n}})$$.
+3. **Increasing**: if every term in the series is a constant factor larger than the previous term, then the running time is dominated by the sum of leaf values, so $$T(n) = \Theta(n^{\log_c{r}})$$.
