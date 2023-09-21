@@ -24,6 +24,7 @@ bibliography: 2023-03-05-divide-and-conquer.bib
 toc:
   - name: Introduction
   - name: The Substitution Method
+  - name: Recursion Trees
 
 ---
 
@@ -62,13 +63,13 @@ $$
 T(n) = 2T(\lfloor{n/2}\rfloor) + n
 $$
 
-This looks like merge sort, so how can we show $$T(n) = O(n \log{n})$$? Using the definition of [big O](https://en.wikipedia.org/wiki/Big_O_notation), we must show there exist positive constants $$c$$ and $$n_0$$ such that:
+This has the same asymptotic complexity as merge sort because in general floors, ceilings, and even lower order terms can be removed entirely from divide and conquer recurrences using domain transformations. So since we know it's like merge sort, how do we show $$T(n) = O(n \log{n})$$? Using the definition of [big O](https://en.wikipedia.org/wiki/Big_O_notation), we must show there exist positive constants $$c$$ and $$n_0$$ such that:
 
 $$
 T(n) \leq cn\lg{n}, \quad n \geq n_0
 $$
 
-To do this, we must assume the above inequality holds for some positive $$m < n$$, particularly $$m = \lfloor{n/2}\rfloor$$. Plugging this in gives:
+where $$\lg{n} = \log_2{n}$$. To do this, we must assume the above inequality holds for some positive $$m < n$$, particularly $$m = \lfloor{n/2}\rfloor$$. Plugging this in gives:
 
 $$
 \begin{flalign}
@@ -82,9 +83,46 @@ $$
 
 This looks good for the recurrence, i.e. the inductive step. But we also have to show the inequality holds for the base cases, i.e. for $$c$$ and $$n_0$$. Notice if we choose $$n_0 = 1$$ as the base case, our recurrence says $$T(1) = 2\lfloor{1/2}\rfloor + 1 = 1$$, but the inequality says $$T(1) \leq c1\lg{1} = 0$$, a contradiction!
 
-Luckily, we can remove the troublesome $$n = 1$$ base case from the inductive proof (it is still part of the recurrence, though). Observe that $$T(n)$$ does not depend on $$T(1)$$ for $$n > 3$$. We can replace $$T(1)$$ with $$T(2)$$ and $$T(3)$$ as the base cases in the inductive proof by setting $$n_0 = 2$$. Now we just need to find a value for $$c$$ so that $$T(2) \leq c2\lg{2}$$ and $$T(3) \leq c3\lg{3}$$. Any $$c \geq 2$$ is sufficient.<d-cite key="clrs2009"></d-cite>
+Luckily, we can remove the troublesome $$n = 1$$ base case from the inductive proof. It's still the base case of the recurrence, but intuitively we don't need to recurse on an array containing a single element because it is already "sorted". We set $$T(1)$$ = 1, and look for other base cases to use in the inductive proof.
+
+Observe that $$T(n)$$ does not directly depend on $$T(1)$$ for $$n > 3$$. Using $$T(1) = 1$$, we find that $$T(2) = 4$$ and $$T(3) = 5$$. We can use these as the base cases in the inductive proof by setting $$n_0 = 2$$. Now we just need to find a value for $$c$$ so that $$T(2) \leq c2\lg{2}$$ and $$T(3) \leq c3\lg{3}$$. It turns out any $$c \geq 2$$ is sufficient.<d-cite key="clrs2009"></d-cite>
 
 This was an example of the **substitution method** for solving recurrences:
 
 1. Guess the form of the solution.
 2. Use mathematical induction to find $$c$$ and $$n_0$$ showing the solution works. 
+
+## Recursion Trees
+
+Another way to see that merge sort is $$O(n \log n)$$ is by looking at its **recursion tree**. That is, a rooted tree where each node represents a subproblem, and has a value corresponding to its contribution to the overall running time. The root of the tree represents the original problem. Edges represent recursive calls to other subproblems, and do _not_ contribute to the running time of either of their endpoints. Leaves represent base cases. The overall running time can therefore be thought of as the sum of node values.
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.html path="assets/img/recursion-tree.png" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    The first three levels of the recursion tree for merge sort.
+</div>
+
+The value of each node comes from the _nonrecursive_ work done for that subproblem. One can see the root value $$n$$ comes from the $$\Theta(n)$$ in the recurrence:
+
+$$MergeSort(n) = 2MergeSort(n/2) + \Theta(n)$$.
+
+The $$2$$ edges from the root are because $$MergeSort(n)$$ makes $$2$$ recursive calls, and the value of the children of the root $$n/2$$ comes from the $$\Theta(n/2)$$ in $$MergeSort(n/2)$$. Let $$d$$ be some depth within the tree, starting with $$d = 0$$ at the root. In general, there are $$2^d$$ nodes at each depth or level of the tree, and each node at that level has a value of $$n/2^d$$.
+
+Since we're talking specifically about merge sort, and because it doesn't actually affect the asymptotic bounds, let the base case of the recurrence be $$T(1) = 1$$. As stated earlier, $$T(n)$$ is equal to the sum of all node values in the tree. Suppose there are $$L$$ levels in the entire tree, so there are $$2^L$$ leaves with value $$n/2^L$$. Since the leaves are base cases, we know $$n/2^L = 1$$, which tells us the number of levels in the tree $$L = \lg{n}$$.
+
+There is one more key fact that allows us to determine the running time: the sum of node values at each level of the tree is $$n$$. Putting it all together, the recursion tree consists of $$\lg{n}$$ levels that each contribute $$n$$ time, so the overall running time of $$T(n)$$ is $$O(n \lg n)$$.
+
+In general, there are many recurrences of the form $$T(n) = r~T(n/c) + f(n)$$ with $$\Theta(1)$$ base cases. The example we just saw had $$r = c = 2,$$ and $$f(n) = n$$. So, a recursion tree for this general recurrence is a complete $$r$$-ary tree where each node at depth $$d$$ has value $$f(n/c^d)$$. The running time is the level-by-level sum of node values:
+
+$$T(n) = \sum\limits_{i = 0}^{L}{r^i \cdot f(n/c^i)}$$.
+
+We saw that $$L = \log_c{n}$$ when $$n_0 = 1$$ because $$n/c^L = n_0$$ is the base case. We also saw there are exactly $$r^L = r^{\log_c{n}} = n^{\log_c{r}}$$ leaves. The last key fact was really that the values of the leaves sum to $$n^{\log_c{r}} \cdot \Theta(1) = \Theta(n^{\log_c{r}})$$.<d-cite key="fox2023"></d-cite>
+
+The sum we just saw is a [geometric series](https://en.wikipedia.org/wiki/Geometric_series), whose asymptotic growth is given by the largest term in the series. With this in mind, there are three common cases where the sum is actually easy to evaluate:
+
+1. **Decreasing**: if every term in the series is a constant factor smaller than the previous term, then the running time is dominated by the value at the root of the tree, and $$T(n) = \Theta(f(n))$$.
+2. **Equal**: if all terms in the series are equal, then $$T(n) = \Theta(f(n) \log{n})$$. Merge sort falls under this case.
+3. **Increasing**: if every term in the series is a constant factor larger than the previous term, then the running time is dominated by the sum of leaf values, so $$T(n) = \Theta(n^{\log_c{n}})$$.
