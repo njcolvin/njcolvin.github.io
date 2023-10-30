@@ -15,7 +15,7 @@ I followed this pseudocode from Jurafsky and Martin to make the model:
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/nb-pseudocode" title="naive Bayes pseudocode" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/nb-pseudocode.png" title="naive Bayes pseudocode" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 
