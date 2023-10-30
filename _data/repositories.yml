@@ -2,6 +2,8 @@ github_users:
   - njcolvin
 
 github_repos:
+  - njcolvin/nflspreads
   - njcolvin/naive-bayes
+  - njcolvin/QueueingSimulation
   - njcolvin/mlp-nfl-predictor
   - njcolvin/OdderJobs
