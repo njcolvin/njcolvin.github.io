@@ -1,7 +1,7 @@
 ---
 layout: distill
 title: Recursion
-description: an introduction to solving problems recursively
+description: an overview of the substitution method and recursion trees
 tags: algorithms math
 giscus_comments: true
 date: 2023-03-05
@@ -83,7 +83,7 @@ $$
 
 This looks good for the recurrence, i.e. the inductive step. But we also have to show the inequality holds for the base cases, i.e. for $$c$$ and $$n_0$$. Notice if we choose $$n_0 = 1$$ as the base case, our recurrence says $$T(1) = 2\lfloor{1/2}\rfloor + 1 = 1$$, but the inequality says $$T(1) \leq c1\lg{1} = 0$$, a contradiction!
 
-Luckily, we can remove the troublesome $$n = 1$$ base case from the inductive proof. It's still the base case of the recurrence, but intuitively we don't need to recurse on an array containing a single element because it is already "sorted". We set $$T(1) = 1$$, and look for other base cases to use in the inductive proof.
+Luckily, we can remove the troublesome $$n = 1$$ base case from the inductive proof. It's still a base case of the recurrence, but we don't have to use it in the inductive step. Intuitively, we don't need to recurse on an array containing a single element because it is already "sorted". We set $$T(1) = 1$$, and look for other base cases to use in the inductive proof.
 
 Observe that $$T(n)$$ does not directly depend on $$T(1)$$ for $$n > 3$$. Using $$T(1) = 1$$, we find that $$T(2) = 4$$ and $$T(3) = 5$$. We can use these as the base cases in the inductive proof by setting $$n_0 = 2$$. Now we just need to find a value for $$c$$ so that $$T(2) \leq c2\lg{2}$$ and $$T(3) \leq c3\lg{3}$$. It turns out any $$c \geq 2$$ is sufficient.<d-cite key="clrs2009"></d-cite>
 
@@ -97,7 +97,7 @@ This was an example of the **substitution method** for solving recurrences:
 Another way to see that merge sort is $$O(n \log n)$$ is by looking at its **recursion tree**. That is, a rooted tree where each node represents a subproblem, and has a value corresponding to its contribution to the overall running time. The root of the tree represents the original problem. Edges represent recursive calls to other subproblems, and do _not_ contribute to the running time of either of their endpoints. Leaves represent base cases. The overall running time can therefore be thought of as the sum of node values.
 
 <div class="row mt-3">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm mt-3 mt-md-0 d-flex justify-content-center align-items-center">
         {% include figure.html path="assets/img/recursion-tree.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>

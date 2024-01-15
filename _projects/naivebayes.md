@@ -5,6 +5,7 @@ description: A naive Bayes classifier in pure Python with unigram features for s
 importance: 1
 category: fun
 related_publications: jurafskymartin2023nlp
+img: /assets/img/nb-eqns.png
 ---
 
 This was my attempt at implementing a naive Bayes model from scratch in Python using pseudocode from chapter 4 of *Speech and Language Processing* by Dan Jurafsky and James H. Martin. This post is simply meant to add context to how the notebook was written, rather than be a standalone note on naive Bayes.
