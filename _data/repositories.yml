@@ -2,7 +2,7 @@ github_users:
   - njcolvin
 
 github_repos:
-  - njcolvin/nflspreads
+  - armanaydemir/openprobono
   - njcolvin/naive-bayes
   - njcolvin/QueueingSimulation
   - njcolvin/mlp-nfl-predictor
